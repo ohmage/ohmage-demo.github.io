@@ -1,0 +1,181 @@
+body {
+    font-family: "Open Sans", sans-serif; font-size: 16px;
+    padding: 0px; margin: 0px;
+    background: #5a99b3 fixed;
+
+    background-image: -moz-radial-gradient(center 25%, circle farthest-corner, #C0E0F4 0%, #18618D 100%);
+    background-image: radial-gradient(center 25%, circle farthest-corner, #C0E0F4 0%, #18618D 100%);
+}
+
+a { color: #3a77b4; font-weight: bold; text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+p { line-height: 150%; }
+
+h1, h2, h3, h4 { font-family: sans-serif; margin-bottom: 1em; color: black; }
+h1 {
+    /*background: #e3e7e2; position: relative; margin-left: -40px; margin-right: -40px;*/
+    /*border-left: solid 1px #fdfbff; border-top: solid 1px #fdfbff;*/
+    /*border-bottom: solid 3px #c3ccc3; border-right: solid 3px #bcbeb6;*/
+    /*padding: 12px 0px 10px 15px;*/
+
+    /*box-shadow: 0px 8px 5px -2px rgba(0,0,0,0.5);*/
+    margin-left: -20px; margin-right: -20px;
+
+    position: relative; color: white;
+    padding: 10px 0px 10px 30px;
+    background: rgba(39, 52, 77, 0.6);
+}
+h2, h3 { margin-bottom: 0.5em; }
+h4 { font-size: larger; }
+
+.bullet { font-size: 45px; position: absolute; right: 20px; top: -2px; color: rgb(39, 52, 77); display: none; }
+
+h1.breadcrumb { background: #9ba3b4; margin-bottom: 10px; }
+h1.breadcrumb a { color: #e6ebef; }
+
+/*
+========================================================
+=== structural styles
+========================================================
+*/
+#banner {
+    background: #e6e6e6 url('../images/ohmage-blue-logo.png') no-repeat center center;
+    border-top: solid 1px white;
+    border-bottom: solid 8px #bbb;
+    font-weight: bold; text-align: center; font-size: 48px;
+    position: relative; top: 25px; height: 80px;
+    z-index: 2;
+
+    width: 940px; margin-left: auto; margin-right: auto;
+
+    box-shadow: 0px 6px 12px rgba(0,0,0,0.6);
+}
+
+#banner #corner_left {
+    position: absolute;
+    left: 0px; bottom: -38px;
+    border-color: #555 #555 transparent transparent;
+    border-style: solid;
+    border-width: 15px;
+    height: 0; width: 0;
+    z-index: -10;
+}
+
+#banner #corner_right {
+    position: absolute;
+    right: 0px; bottom: -38px;
+    border-color: #555 transparent transparent #555;
+    border-style: solid;
+    border-width: 15px;
+    height: 0; width: 0;
+    z-index: -10;
+}
+
+/*#banner #badge {*/
+    /*background: url('/static/demo/images/holes.png') no-repeat center center;*/
+    /*width: 72px; height: 72px; position: absolute; left: 25px; bottom: -15px;*/
+/*}*/
+
+#trunk {
+    width: 840px; padding: 180px 20px 20px 20px;
+    margin-left: auto; margin-right: auto;
+    /*background: #ccf1f9;*/
+    background: #F2F8FC;
+    /*background: rgba(255,255,255,0.8);*/
+
+    /* FAISAL: this is the old, thick background that we may someday use */
+    /*border-left: solid 20px #6fbddd;*/
+    /*border-right: solid 20px #6fbddd;*/
+
+    /*border-bottom: solid 20px #6fbddd;*/
+    position: relative; top: -140px;
+    z-index: 1;
+
+    box-shadow: 0px 0px 16px rgba(0,0,0,0.8);
+}
+
+#footer {
+    color: #aaa;
+    border-top: dashed 1px #ddd;
+    font-size: 12px; padding: 10px; padding-left: 20px;
+    margin: -20px; margin-top: 20px;
+}
+
+/*
+========================================================
+=== styles for text-left, image-right boxes
+========================================================
+*/
+.composed .figure {
+    float: right; margin-left: 20px; margin-bottom: 40px; padding: 3px;
+    padding-left: 20px; border-left: solid 1px #ccc;
+}
+
+.composed .figure img.shadowed {
+    border: solid 1px #ddd;
+    box-shadow: 4px 8px 5px -2px rgba(0,0,0,0.2);
+}
+
+.command_tray { position: relative; top: 5px; }
+
+.bigbutton {
+    display: inline-block; background: #90d0ff; color: #293840; padding: 10px; width: 200px; margin-right: 10px;
+    text-align: center; cursor: pointer; font-size: 18px;
+    position: relative;
+
+    background: #ddd;
+    border-top: solid 1px white;
+    border-bottom: solid 4px #bbb;
+    box-shadow: 0px 3px 6px rgba(0,0,0,0.6);
+}
+.bigbutton:hover { text-decoration: none; top: -2px; }
+
+/*
+========================================================
+=== flow, step, and substep styles
+========================================================
+*/
+.flow { clear: both; margin: 0; margin-top: 3em; }
+
+.flow_header {
+    background-repeat: no-repeat;
+    background-position: 15px center;
+    background-size: 64px 64px;
+    padding: 25px;
+    padding-left: 90px;
+}
+
+/* regular step styles */
+.step { clear: both; padding-bottom: 1em; }
+
+/* disabled step styles */
+.step.disabled h2 { color: #aaa; }
+.step.disabled .frame { display: none; }
+
+/* this is the viewport through which the slider is visible */
+.frame {
+    height: 400px; overflow: hidden;  position: relative; background: white;
+    /*border: solid 3px #69a0cb;*/
+    /*box-shadow: inset 0px 0px 10px rgba(0,0,0,0.4);*/
+    border-top: solid 1px #aaa;
+    border-bottom: solid 1px #aaa;
+    border-left: dotted 1px #ddd; border-right: dotted 1px #ddd;
+}
+
+/* these are the individual tiles that are arranged horizontally in the slider,
+but viewed one at a time through the frame */
+.panel { float: left; position: relative; }
+.panel .content { padding: 15px; }
+.panel ul li, .panel ol li { margin-bottom: 1em; }
+.panel.empty {
+    background: url('../images/stripes.png');
+    font-weight: bold; font-size: 24px; text-align: center; color: #777; padding-top: 50px;
+}
+
+/* these are the controls that are on the bottom of each panel */
+.controls { position: absolute; height: 30px; bottom: 0px; left: 0px; right: 0px; background: #333; }
+.controls a { color: white;  font-weight: bold; cursor: pointer; }
+.controls a:hover { text-decoration: none; color: #b3d5e8; }
+.controls .prev { padding: 5px; display: block; float: left; height: 30px; }
+.controls .next { padding: 5px; display: block; float: right; text-align: right; height: 30px; }
