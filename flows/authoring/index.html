@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>ohmage :: end-to-end data stream collection and analysis for your everyday life</title>
+
+        <link rel="stylesheet" href="../../static/demo/css/demo.css" type="text/css" />
+        <link rel="stylesheet" href="../../static/demo/css/chatbubble.css" type="text/css" />
+        <link rel="shortcut icon" href="../../static/images/favicon-blue.ico" />
+
+        <script src="../../static/js/jquery-1.7.1.min.js" type="text/javascript" language="Javascript"></script>
+        <script src="../../static/js/jquery.scrollTo-1.4.2-min.js" type="text/javascript" language="Javascript"></script>
+
+        <!-- qtip includes -->
+        <script src="../../static/qtip/jquery.qtip.min.js" type="text/javascript" language="Javascript"></script>
+        <link rel="stylesheet" href="../../static/qtip/jquery.qtip.min.css" type="text/css" />
+
+        <!-- cookies include -->
+        <script src="../../static/demo/js/jquery.cookie.js" type="text/javascript" language="Javascript"></script>
+
+        <!-- used to transmit events throughout the codebase -->
+        <script src="../../static/demo/js/pubsub.js" type="text/javascript" language="Javascript"></script>
+
+        <!-- attach your page-specific code here -->
+        <script type="text/javascript" language="Javascript">
+        
+$(document).ready(function() {
+    // catch the event that the frames fire to hide all the steps
+    $.subscribe("/frames/updated", function() {
+        // hide all but the first step of this flow
+        $(".step").addClass("disabled").filter(":first").removeClass("disabled");
+    });
+
+    // also, wait for a mo and then scroll down to the header
+    $(".flow h1").fadeTo(10, 0.2).fadeTo(500, 1, function() {
+        setTimeout(function() {
+            $.scrollTo($(".flow"), {
+                'axis': 'y',
+                'duration': 600
+            });
+        }, 200);
+    });
+});
+
+        </script>
+
+        <!-- executed after the custom scripts to let them get the events it raises -->
+        <script src="../../static/demo/js/demo.js" type="text/javascript" language="Javascript"></script>
+
+        <style>
+        
+        </style>
+    </head>
+
+    <body>
+        <div id="banner">
+            <div id="badge"></div>
+
+            <div id="corner_left"></div>
+            <div id="corner_right"></div>
+        </div>
+
+        <div id="trunk">
+            
+<h1 class="breadcrumb"><a href="../../index.html">Home</a> :: <a href="../index.html">Flows</a> :: Authoring in Ohmage</h1>
+
+<div class="flow">
+    <h1 class="flow_header" style="background-image: url('../../static/uploads/flow-icons/clippy.png');">
+        <span class="bullet">&#10070;</span> Authoring in Ohmage
+    </h1>
+
+    
+<div class="step">
+    <h2>Step 1: Getting Started</h2>
+
+    <div class="frame">
+        <div class="slider">
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="../../static/uploads/step-images/splash.png" width="340" height="394" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>1.</b> Work in Progress</h3>
+
+                    <p style="line-height: 150%;">Thank you for your interest in authoring campaigns for ohmage. The tutorial is still in progress; once it's completed, it will be uploaded here ASAP.</p>
+                </div>
+
+                <div class="controls">
+                    
+
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+            <div id="footer">
+		<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0; float: left; margin-right: 10px;" src="http://i.creativecommons.org/l/by/3.0/80x15.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">ohmage demo site</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a> -- for more information, contact josh (at) openmhealth.org
+            </div>
+        </div>
+    </body>
+</html>

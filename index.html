@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>ohmage :: end-to-end data stream collection and analysis for your everyday life</title>
+
+        <link rel="stylesheet" href="static/demo/css/demo.css" type="text/css" />
+        <link rel="stylesheet" href="static/demo/css/chatbubble.css" type="text/css" />
+        <link rel="shortcut icon" href="static/images/favicon-blue.ico" />
+
+        <script src="static/js/jquery-1.7.1.min.js" type="text/javascript" language="Javascript"></script>
+        <script src="static/js/jquery.scrollTo-1.4.2-min.js" type="text/javascript" language="Javascript"></script>
+
+        <!-- qtip includes -->
+        <script src="static/qtip/jquery.qtip.min.js" type="text/javascript" language="Javascript"></script>
+        <link rel="stylesheet" href="static/qtip/jquery.qtip.min.css" type="text/css" />
+
+        <!-- cookies include -->
+        <script src="static/demo/js/jquery.cookie.js" type="text/javascript" language="Javascript"></script>
+
+        <!-- used to transmit events throughout the codebase -->
+        <script src="static/demo/js/pubsub.js" type="text/javascript" language="Javascript"></script>
+
+        <!-- attach your page-specific code here -->
+        <script type="text/javascript" language="Javascript">
+        
+$(document).ready(function() {
+    // process blurb scroll
+    $("#get_started").click(function() {
+        $(".step").addClass("disabled").filter(":first").removeClass("disabled")
+            .children(".frame")
+            .children(".slider").hide().end()
+            .slideDown(500, function() {
+                // fade in the children and then slide to the flow header
+                $(this).children(".slider").fadeIn(500, function() {
+                    $.scrollTo($(".flow"), {
+                        'axis': 'y',
+                        'duration': 500
+                    });
+                });
+            });
+    });
+
+    // catch the event that the frames fire to hide all the steps
+    $.subscribe("/frames/updated", function() {
+        $(".step").addClass("disabled");
+        $(".step .frame").hide();
+    });
+
+    // if our 'repeated-user' flag is unset, show the help bubble on the first substep nav
+    if (!$.cookie("returning-user")) {
+        var $target = $(".step:first .panel:first  div.controls a.next");
+
+        // attach the clickhere balloon next to the first substep nav and make it visible
+        var $balloon = $("#clickhere_balloon").detach()
+            .appendTo($target)
+            .show();
+
+        // make the balloon bob up and down attractively
+        var balloonBob = function() {
+            console.log("Bounce!");
+
+            $balloon
+                .animate({ bottom: '-=10' }, 1500)
+                .animate({ bottom: '+=10' }, 1500, balloonBob);
+        }
+        // and call it to set up some infinite recursion
+        balloonBob();
+
+        $target.click(function() {
+            $balloon.fadeOut(300, function() { $(this).remove(); });
+            $.cookie("returning-user", "true", { expires: 365 });
+        });
+    }
+});
+
+        </script>
+
+        <!-- executed after the custom scripts to let them get the events it raises -->
+        <script src="static/demo/js/demo.js" type="text/javascript" language="Javascript"></script>
+
+        <style>
+        
+        </style>
+    </head>
+
+    <body>
+        <div id="banner">
+            <div id="badge"></div>
+
+            <div id="corner_left"></div>
+            <div id="corner_right"></div>
+        </div>
+
+        <div id="trunk">
+            
+    <div id="blurb" class="composed">
+        <h1><span class="bullet">&#10070;</span> Participate. Visualize. Change.</h1>
+
+        <div class="figure">
+            <img src="static/demo/images/ohmage-preview.png" height="400" class="shadowed" />
+        </div>
+
+        <h4>What is Ohmage?</h4>
+
+        <p><strong>ohmage</strong> is an open-source participatory sensing technology platform. It supports expressive campaign authoring; mobile phone-based data capture through both inquiry-based surveys and automated data capture as well as temporally/spatially triggered reminders, data visualization and real-time feedback; privacy respecting data management; and extensible data exploration. All captured data are automatically timestamped, geocoded, and uploaded for analysis and visualization.</p>
+
+        <p>This platform is used in pilot health studies (<a href="http://www.andwellness.org">www.andwellness.org</a>) and will be used as a pedagogical tool in LAUSD schools for learning data representation, collection and analysis (<a href="http://www.mobilizingcs.org">www.mobilizingcs.org</a>).</p>
+
+        <div class="command_tray">
+            <a id="get_started" style="margin-left: auto; margin-right: auto;" class="bigbutton">Let's Get Started</a>
+            <a id="more_to_try" href="flows/index.html" style="margin-left: 20px;" class="bigbutton">More...</a>
+        </div>
+
+        <div id="clickhere_balloon" class="chat-bubble" style="display: none;">
+            continue to the next step
+            <div class="chat-bubble-arrow-border"></div>
+            
+        </div>
+    </div>
+
+    <div class="flow">
+        <h1 class="flow_header" style="background-image: url('static/uploads/flow-icons/ohmage-icon-blue-noshadow-96px.png');">
+            <span class="bullet">&#10070;</span> Installation and First Survey
+        </h1>
+
+        
+<div class="step">
+    <h2>Step 1: Signing Up for Ohmage</h2>
+
+    <div class="frame">
+        <div class="slider">
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/step1_-_signup.png" width="340" height="394" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>1.</b> Registering Online</h3>
+
+                    <p style="line-height: 150%;">In order to use Ohmage for data collection, you must first register an account:
+<a href="http://play.ohmage.org/#register" target="_blank">Ohmage Registration</a><br /><br />
+
+Once you've clicked the link above, you'll be presented with a brief form asking for your username, password, and email address. You'll also be presented with the terms of service, which can be reviewed from the Ohmage website at any time.</p>
+                </div>
+
+                <div class="controls">
+                    
+
+                    
+                    <a class="next">2. Verifying your Address &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/step2_-_email_verification.png" width="340" height="394" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>2.</b> Verifying your Address</h3>
+
+                    <p style="line-height: 150%;">Now that you've registered for Ohmage, you should receive an email shortly asking you to verify your account. Simply click the link in the email and your account will be verified and ready to use.<br /><br />
+
+Once you're done with that, we can proceed to installing and trying out the Ohmage phone app in step 2...</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next to_next_step">Getting the Ohmage App  &#9658;</a>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <h2>Step 2: Getting the Ohmage App</h2>
+
+    <div class="frame">
+        <div class="slider">
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/qrcode.png" width="340" height="340" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>1.</b> Getting Ohmage from Google Play</h3>
+
+                    <p style="line-height: 150%;">Ohmage is available on Google Play at the following address:
+<a href="https://play.google.com/store/apps/details?id=org.ohmage">Ohmage on Google Play</a><br /><br />
+
+Since Ohmage is a rich data-stream aggregator, it requires significantly more permissions than your average app. All data collected will be held in keeping with the terms of service you reviewed in the last step; if you have any questions or concerns, you can always contact the Ohmage maintainers.<br /><br />
+
+If you have your phone handy, you may take a picture of the QR code on the right with scanning software to link you directly to Ohmage on Google Play.</p>
+                </div>
+
+                <div class="controls">
+                    
+
+                    
+                    <a class="next">2. Running Ohmage for the First Time &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/step4_-_opening_ohmage_pt_B_1.png" width="340" height="367" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>2.</b> Running Ohmage for the First Time</h3>
+
+                    <p style="line-height: 150%;">Once ohmage has been installed, open your Applications Browser and select ohmage from the menu.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next to_next_step">Logging In, Joining Up  &#9658;</a>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <h2>Step 3: Logging In, Joining Up</h2>
+
+    <div class="frame">
+        <div class="slider">
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/logging_in_3.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>1.</b> Logging in to ohmage</h3>
+
+                    <p style="line-height: 150%;">Upon launching the app, you'll be presented with the screen to the right.<br /><br />
+
+Enter the username and password you chose in registration and press "Log In".</p>
+                </div>
+
+                <div class="controls">
+                    
+
+                    
+                    <a class="next">2. The Dashboard &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/dashboard_3.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>2.</b> The Dashboard</h3>
+
+                    <p style="line-height: 150%;">Once you're successfully logged in, this is the first screen that you'll see. We're going to concentrate on Campaigns, Surveys, and the Upload Queue in this tutorial.
+
+<ul>
+<li><b>Campaigns:</b> In ohmage, a collection of surveys is referred to as a data-collection campaign. In this section, you can view the campaigns in which you're participating or find a new campaign to join.</li>
+<li><b>Surveys:</b> Presents a list of surveys for all of the campaigns in which you're participating. The list can be filtered to only show surveys from a specific campaign, but by default shows them all.</li>
+<!--
+<li><b>Response History:</b> A calendar of survey responses you've submitted in the past. Each day displays the number of surveys you've taken on that day (or is blank if you didn't take any) and can be touched to show a list of the surveys taken on that day.</li>
+-->
+<li><b>Upload Queue:</b> A list of surveys that you've completed which are pending upload. You can manually submit individual surveys here or choose how to resolve issues with failed survey uploads.</li>
+</ul>
+
+Click "Campaigns" to see the campaigns in which you're currently participating.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">3. Joining a Campaign (part 1) &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/my_campaigns_none_yet.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>3.</b> Joining a Campaign (part 1)</h3>
+
+                    <p style="line-height: 150%;">The Campaigns page is initially empty, since you aren't participating in any campaigns. Once you're participating in a few campaigns, the "Refresh" icon in the top-right will query the server for the status of your campaigns.<br /><br />
+
+Let's browse for a campaign to join by clicking the "+" button in the top right.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">4. Joining a Campaign (part 2) &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/add_a_campaign.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>4.</b> Joining a Campaign (part 2)</h3>
+
+                    <p style="line-height: 150%;">We can now browse a list of campaigns available on the server. This list (and most lists in ohmage) is comprised of two parts:
+
+<ol>
+<li>the <b>main action,</b> which takes up most of the space in the list element, and usually takes you to  a page with information about the list item
+<li>the <b>sub-action</b>, the icon on the righthand side of the list, which generally performs the most common action for that list item.
+</ol>
+
+In this case, the main action shows information about the campaign, and the sub-action downloads and participates in the campaign directly.<br /><br />
+
+We're going to look at the information for the "Demo Snack" campaign, so click the lefthand side of that campaign's entry in the list.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">5. The Campaign Info Page &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/campaign_info_-_demo_sleep.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>5.</b> The Campaign Info Page</h3>
+
+                    <p style="line-height: 150%;">Information about the campaign is displayed here. Once you've reviewed the information, you can either click "Participate" in the main action area, or use the Back button to return to the list of campaigns.<br /><br />
+
+Click "Participate", wait for the status row to read "ready", then press the Back button on your phone to return to the list of campaigns. You should notice that the "Demo Snack" campaign now appears in your list of campaigns.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">6. Returning to the Campaign List &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/my_campaigns_one_campaign.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>6.</b> Returning to the Campaign List</h3>
+
+                    <p style="line-height: 150%;">The campaign we've added is now visible on the campaign list page. You may either click the list item to view its information again, or click the sub-action button to be taken directly to a list of surveys for that campaign.<br /><br />
+
+For the time being, let's back out to the dashboard so that we can take a look at the next page, the Survey List.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next to_next_step">Taking a Survey  &#9658;</a>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <h2>Step 4: Taking a Survey</h2>
+
+    <div class="frame">
+        <div class="slider">
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/my_surveys_sleep_campaign.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>1.</b> The Survey List</h3>
+
+                    <p style="line-height: 150%;">From the dashboard, select "Surveys" to access the Survey page. Here, all of the available surveys are presented as a list, with a filter at the top to show only surveys from a particular campaign.<br /><br />
+
+Click a survey to get more information about it, or click the sub-action pencil icon to start taking the survey.<br /><br />
+
+In this case, we're going to get more information about the "Sleep Pattern" survey, so click the lefthand side of that entry to continue. </p>
+                </div>
+
+                <div class="controls">
+                    
+
+                    
+                    <a class="next">2. The Survey Info Page &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/survey_info.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>2.</b> The Survey Info Page</h3>
+
+                    <p style="line-height: 150%;">This screen displays information about the survey. You can see a description of the survey (if available), how many times you've taken it in the past, and whether any reminders are configured to notify you when it's time to take it. Reminders will be the topic of another tutorial.<br /><br />
+
+For now, click "Take Survey" to begin taking this one.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">3. Starting a Survey &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/sleep_pattern_first_question.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>3.</b> Starting a Survey</h3>
+
+                    <p style="line-height: 150%;">Surveys consist of a series of questions where each question is one of a few different types (multiple choice, free text, camera capture, etc.)<br /><br />
+
+Surveys can be navigated at will via the "Previous" and "Next" buttons, although most questions require a valid response before continuing. If a question can be skipped, a "Skip" button will appear in between the "Previous" and "Next" buttons, allowing you to proceed without supplying a value.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">4. Finishing the Survey &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/survey_complete.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>4.</b> Finishing the Survey</h3>
+
+                    <p style="line-height: 150%;">Once you've answered all the questions, you'll see a completion screen (pictured). At this point, your survey is placed in the upload queue, where it will be automatically uploaded within an hour.<br /><br />
+
+If you'd like to upload it manually, you may view the "Upload Queue" page, accessible from the dashboard.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">5. The Upload Queue &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/upload_queue_one_pending.png" width="340" height="536" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>5.</b> The Upload Queue</h3>
+
+                    <p style="line-height: 150%;">The upload queue provides a means to review surveys that are pending upload.<br /><br />
+
+You may also choose to manually upload specific surveys by clicking the sub-action button for the survey. If the survey failed to upload before, you'll see an error icon instead of the normal upload icon, which you may click to choose how to resolve the issue. Finally, you may batch upload all pending surveys using the "Upload All" button at the bottom.<br /><br />
+
+Go ahead and click "Upload All" to push the survey you answered before to the ohmage server. We'll review it later via the website.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next to_next_step">Review and Next Steps  &#9658;</a>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="step">
+    <h2>Step 5: Review and Next Steps</h2>
+
+    <div class="frame">
+        <div class="slider">
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/logging_in_2.png" width="340" height="325" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>1.</b> Accessing The Admin Site</h3>
+
+                    <p style="line-height: 150%;">For this step, we return to the ohmage website at <a href="https://internal.ohmage.org">https://internal.ohmage.org</a>.<br /><br />
+
+Once you're there, enter the username and password you chose at registration and press "Log In".</p>
+                </div>
+
+                <div class="controls">
+                    
+
+                    
+                    <a class="next">2. The Admin Dashboard &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/campaign_view.png" width="340" height="364" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>2.</b> The Admin Dashboard</h3>
+
+                    <p style="line-height: 150%;">The first thing you'll see upon logging in is the dashboard, which provides a summary of your activity and a collection of links to common tasks.<br /><br />
+
+We're interested in reviewing our response, so click the "Response" tab in the upper left, as depicted.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">3. Seeing Your Response &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/view_responses.png" width="340" height="369" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>3.</b> Seeing Your Response</h3>
+
+                    <p style="line-height: 150%;">Select "Demo Snack" from the "Campaign" drop-down menu on the left, your username from the "Participant" drop-down menu. Finally, click "Show Responses".<br /><br />
+
+The response you submitted from your phone should be visible as the first result on the righthand side with the appropriate data.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                    <a class="next">4. What&#39;s Next? &#9658;</a>
+                    
+                </div>
+            </div>
+            
+            <div class="composed panel">
+                <div class="content">
+                    
+                    <img class="figure" src="static/uploads/step-images/mobility-icon-fuschia-newguy.png" width="340" height="340" />
+                    
+
+                    <h3 style="margin-top: 0;"><b>4.</b> What&#39;s Next?</h3>
+
+                    <p style="line-height: 150%;">By now you should have an idea of how to install and interact with the ohmage, but there is plenty more to learn.<br /><br />
+
+To get you started, here's a directory of other tutorials ("flows") available on this site:
+<a href="flows/index.html">ohmage flow directory</a><br /><br />
+
+Check back often, as more flows will become available in the near future.</p>
+                </div>
+
+                <div class="controls">
+                    
+                    <a class="prev">&#9668; back</a>
+                    
+
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+    </div>
+
+
+            <div id="footer">
+		<a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0; float: left; margin-right: 10px;" src="http://i.creativecommons.org/l/by/3.0/80x15.png"></a><br><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">ohmage demo site</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/deed.en_US">Creative Commons Attribution 3.0 Unported License</a> -- for more information, contact josh (at) openmhealth.org
+            </div>
+        </div>
+    </body>
+</html>
